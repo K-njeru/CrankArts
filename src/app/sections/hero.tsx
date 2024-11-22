@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 
 const carouselData = [
   {
@@ -40,7 +40,7 @@ const CursorTrail = () => {
     return () => {
       window.removeEventListener('mousemove', moveCursor)
     }
-  }, [])
+  }, [cursorX, cursorY])
 
   return (
     <>
@@ -131,10 +131,17 @@ export default function Hero() {
     setCurrentSlide((prev) => (prev - 1 + carouselData.length) % carouselData.length)
   }, [])
 
+  const scrollToServices = () => {
+    const servicesSection = document.getElementById('services')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <div 
       ref={containerRef}
-      className="relative w-screen h-screen overflow-hidden bg-black" id='home'
+      className="relative w-screen h-screen overflow-hidden bg-black" id='hero'
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}
@@ -157,7 +164,9 @@ export default function Hero() {
             alt={carouselData[currentSlide].title}
             layout="fill"
             objectFit="cover"
-            quality={100}
+            quality={75}
+            priority={currentSlide === 0}
+            loading={currentSlide === 0 ? "eager" : "lazy"}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />
         </motion.div>
@@ -185,13 +194,23 @@ export default function Hero() {
               <span className="relative z-10">Book Your Session</span>
               <div className="absolute inset-0 bg-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
             </button>
+            <div className="flex justify-center mt-4">
+              <motion.div
+                className="cursor-pointer"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                onClick={scrollToServices}
+              >
+                <ChevronDown size={60} className="text-orange-300 hover:text-orange-500 transition-colors duration-300" />
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
 
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 hover:bg-opacity-75 transition-all duration-300"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-orange-300 hover:text-orange-500 p-2 rounded-full z-20 hover:bg-opacity-75 transition-all duration-300"
         aria-label="Previous slide"
       >
         <ChevronLeft size={24} />
@@ -199,7 +218,7 @@ export default function Hero() {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 hover:bg-opacity-75 transition-all duration-300"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-orange-300 hover:text-orange-500 p-2 rounded-full z-20 hover:bg-opacity-75 transition-all duration-300"
         aria-label="Next slide"
       >
         <ChevronRight size={24} />

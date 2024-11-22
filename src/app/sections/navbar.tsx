@@ -136,7 +136,7 @@ export default function Navbar() {
             href="https://wa.me/254794298696"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold leading-6 text-gray-300 hover:text-white"
+            className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500"
           >
             Artist <span aria-hidden="true" className="ml-2">&rarr;</span>
           </a>
@@ -185,7 +185,7 @@ export default function Navbar() {
                     href="https://wa.me/254794298696"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-semibold leading-6 text-gray-300 hover:text-white"
+                    className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500"
                     onClick={() => setMenuOpen(false)}
                   >
                     Artist <span aria-hidden="true" className="ml-2">&rarr;</span>
