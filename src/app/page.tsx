@@ -53,7 +53,7 @@ export default function Home() {
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
             onClick={scrollToTop}
-            className="fixed bottom-5 right-5 bg-orange-500 text-white rounded-full p-3 shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300 z-50"
+            className="fixed bottom-20 right-5 bg-orange-500 text-white rounded-full p-3 shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300 z-50"
             aria-label="Scroll to top"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,6 +62,19 @@ export default function Home() {
           </motion.button>
         )}
       </AnimatePresence>
+      {/* Chatling Embed Script */}
+      <script>
+        {`
+          window.chtlConfig = { chatbotId: "5542779218" };
+        `}
+      </script>
+      <script
+        async
+        data-id="5542779218"
+        id="chatling-embed-script"
+        type="text/javascript"
+        src="https://chatling.ai/js/embed.js"
+      ></script>
     </div>
   );
 }
