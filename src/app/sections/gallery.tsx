@@ -16,12 +16,13 @@ const images: ImageData[] = [
   { url: '/img/graph3.webp', category: 'wall art', width: 400, height: 300 },
   { url: '/img/graph2.jpg', category: 'wall art', width: 400, height: 300 },
   { url: '/img/graph1.webp', category: 'wall art', width: 400, height: 300 },
+  { url: '/img/tat.png', category: 'tattoos', width: 400, height: 300 },
   { url: '/img/tat2.jpg', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat1.jpg', category: 'tattoos', width: 400, height: 300 },
   { url: '/img/tat3.jpg', category: 'tattoos', width: 400, height: 300 },
   { url: '/img/wall1.jpg', category: 'custom designs', width: 400, height: 300 },
   { url: '/img/wall2.jpg', category: 'custom designs', width: 400, height: 300 },
-  { url: 'https://images.unsplash.com/photo-1667514045884-ea015752f06b?w=400&h=300&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YWZyaWNhbiUyMHRhdHRvb3N8ZW58MHx8MHx8fDA%3D', category: 'piercings', width: 400, height: 300 },
+  { url: '/img/pier.jpg', category: 'piercings', width: 400, height: 300 },
+  { url: '/img/pier.webp', category: 'piercings', width: 400, height: 300 },
 ];
 
 const Gallery: React.FC = () => {

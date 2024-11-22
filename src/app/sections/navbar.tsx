@@ -4,14 +4,12 @@ import { useState, useEffect } from "react"
 import { Menu, X, ChevronDown, Anchor, Zap, Users, Building2 } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from 'next/navigation'
 import { motion } from "framer-motion"
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const pathname = usePathname()
   const [activeSection, setActiveSection] = useState<string>("home")
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function BookAppointment() {
   return (
@@ -72,9 +73,11 @@ export default function BookAppointment() {
 
         {/* Image Section */}
         <div className="lg:w-1/2 w-full mb-10 lg:mb-0 lg:ml-12 flex justify-center items-center">
-          <img
+        <Image
             src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
             alt="Tattoo Studio"
+            width={800}
+            height={500}
             className="rounded-lg shadow-lg"
           />
         </div>
