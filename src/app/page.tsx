@@ -12,19 +12,45 @@ import Footer from "./sections/footer";
 
 export default function Home() {
   const [showButton, setShowButton] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowButton(true);
+        setShowChat(true);
       } else {
         setShowButton(false);
+        setShowChat(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (showChat) {
+      window.chtlConfig = { chatbotId: "5542779218" };
+      const script = document.createElement('script');
+      script.src = "https://chatling.ai/js/embed.js";
+      script.async = true;
+      script.setAttribute('data-id', "5542779218");
+      script.setAttribute('id', "chatling-embed-script");
+      script.setAttribute('type', "text/javascript");
+      document.body.appendChild(script);
+    } else {
+      const script = document.getElementById("chatling-embed-script");
+      if (script) {
+        document.body.removeChild(script);
+      }
+      // Remove the chat widget if it exists
+      const chatWidget = document.querySelector('.chatling-widget');
+      if (chatWidget) {
+        chatWidget.remove();
+      }
+    }
+  }, [showChat]);
 
   const scrollToTop = () => {
     const homeSection = document.getElementById("home");
@@ -62,19 +88,6 @@ export default function Home() {
           </motion.button>
         )}
       </AnimatePresence>
-      {/* Chatling Embed Script */}
-      <script>
-        {`
-          window.chtlConfig = { chatbotId: "5542779218" };
-        `}
-      </script>
-      <script
-        async
-        data-id="5542779218"
-        id="chatling-embed-script"
-        type="text/javascript"
-        src="https://chatling.ai/js/embed.js"
-      ></script>
     </div>
   );
 }
