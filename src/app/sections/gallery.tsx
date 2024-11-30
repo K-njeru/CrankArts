@@ -17,12 +17,15 @@ const images: ImageData[] = [
   { url: '/img/graph2.jpg', category: 'wall art', width: 400, height: 300 },
   { url: '/img/graph1.webp', category: 'wall art', width: 400, height: 300 },
   { url: '/img/tat.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat2.jpg', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat3.jpg', category: 'tattoos', width: 400, height: 300 },
+  { url: '/img/tat-5.png', category: 'tattoos', width: 400, height: 300 },
+  { url: '/img/tat-6.png', category: 'tattoos', width: 400, height: 300 },
+  { url: '/img/tat-7.png', category: 'tattoos', width: 400, height: 300 },
+  { url: '/img/tat-8.png', category: 'tattoos', width: 400, height: 300 },
   { url: '/img/wall1.jpg', category: 'custom designs', width: 400, height: 300 },
   { url: '/img/wall2.jpg', category: 'custom designs', width: 400, height: 300 },
   { url: '/img/pier.jpg', category: 'piercings', width: 400, height: 300 },
   { url: '/img/pier.webp', category: 'piercings', width: 400, height: 300 },
+  { url: '/img/piercing-5.png', category: 'piercings', width: 400, height: 300 },
 ];
 
 const Gallery: React.FC = () => {

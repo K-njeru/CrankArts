@@ -30,8 +30,8 @@ const Footer: React.FC = () => {
             <p className="text-gray-700 mb-6 leading-relaxed">
               At Crank Arts, we bring your creativity to life with precision and passion. From stunning tattoos and piercings to custom wall art and paintings, we specialize in creating unique designs that reflect your individuality.
             </p>
-            <Link 
-              href="#services" 
+            <Link
+              href="#services"
               className="inline-block bg-orange-500 text-white py-2 px-4 rounded-full hover:bg-orange-600 transition-colors duration-300"
             >
               Explore Our Services
@@ -44,8 +44,8 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {['Services', 'Studio', 'Gallery', 'Appointment'].map((item) => (
                 <li key={item}>
-                  <Link 
-                    href={`#${item.toLowerCase()}`} 
+                  <Link
+                    href={`#${item.toLowerCase()}`}
                     className="text-gray-700 hover:text-orange-500 transition-colors duration-300"
                   >
                     {item}
@@ -61,11 +61,11 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li className="flex items-center">
                 <MapPin className="w-5 h-5 mr-3 text-orange-500" />
-                <span>123 Art Street, Studio 101, Cityville</span>
+                <span>Gate C Street, Crank Arts Studio, Juja</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-orange-500" />
-                <span>(123) 456-7890</span>
+                <span>(254) 794-298696</span>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-orange-500" />
@@ -78,25 +78,42 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Social Media Links */}
+
         <div className="border-t border-orange-300 pt-8 mt-8">
           <div className="flex justify-center space-x-6">
             {[
               { icon: Facebook, href: 'https://facebook.com' },
               { icon: Instagram, href: 'https://instagram.com' },
-              { icon: Twitter, href: 'https://twitter.com' },
+              {
+                icon: () => (
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="w-6 h-6"
+                  fill="currentColor"
+                >
+                  <path d="M7.55 7.05l4.1 4.94-4.1 5.02h2.57l2.6-3.22 2.56 3.22h2.67L14 12l4.2-4.95h-2.5l-2.45 2.96-2.5-2.96H7.55z"></path>
+                </svg>
+                
+                ),
+                href: 'https://x.com'
+              },
             ].map(({ icon: Icon, href }, index) => (
               <a
                 key={index}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-500 hover:text-orange-600 transition-colors duration-300"
+                className="text-orange-500 hover:text-orange-900 transition-colors duration-300"
               >
-                <Icon className="w-6 h-6" />
+                <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-orange-500 hover:bg-orange-300 hover:border-orange-600 transition-colors duration-300">
+                  <Icon />
+                </div>
               </a>
             ))}
           </div>
         </div>
+
 
         {/* Bottom Text */}
         <div className="text-center text-sm mt-8">
