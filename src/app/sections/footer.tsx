@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -87,17 +87,32 @@ const Footer: React.FC = () => {
               {
                 icon: () => (
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="w-6 h-6"
-                  fill="currentColor"
-                >
-                  <path d="M7.55 7.05l4.1 4.94-4.1 5.02h2.57l2.6-3.22 2.56 3.22h2.67L14 12l4.2-4.95h-2.5l-2.45 2.96-2.5-2.96H7.55z"></path>
-                </svg>
-                
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="w-6 h-6"
+                    fill="currentColor"
+                  >
+                    <path d="M7.55 7.05l4.1 4.94-4.1 5.02h2.57l2.6-3.22 2.56 3.22h2.67L14 12l4.2-4.95h-2.5l-2.45 2.96-2.5-2.96H7.55z"></path>
+                  </svg>
+
                 ),
                 href: 'https://x.com'
               },
+              {
+                icon: () => (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="w-6 h-6"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.243 10.314a3.96 3.96 0 01-1.485.284c-.28 0-.556-.034-.827-.098v3.408a5.27 5.27 0 01-8.485-4.03 5.27 5.27 0 011.676-3.862 5.27 5.27 0 014.465-1.008v3.032a2.444 2.444 0 00-.473-.047 2.444 2.444 0 00-2.442 2.444 2.444 2.444 0 002.442 2.444c.261 0 .518-.036.768-.105v-4.8c.27.095.544.164.82.204v2.02c0 .86.702 1.562 1.562 1.562a1.562 1.562 0 001.561-1.562v-1.73c.564.084 1.14.128 1.714.128v-2.013c-.474 0-.948-.036-1.414-.105v-3.052c.677.367 1.405.64 2.178.803v2.262z" />
+                  </svg>
+
+                ),
+                href: 'https://tiktok.com'
+              },
+
             ].map(({ icon: Icon, href }, index) => (
               <a
                 key={index}
