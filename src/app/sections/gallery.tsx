@@ -18,8 +18,6 @@ type ImageData = {
 };
 
 const images: ImageData[] = [
-  { url: 'https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=800&q=80', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&q=80', category: 'wall art', subCategory: 'modern', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=800&q=80', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=800&q=80', category: 'tattoos', subCategory: 'traditional', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1542727365-19732a80dcfd?w=800&q=80', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
@@ -27,8 +25,20 @@ const images: ImageData[] = [
   { url: 'https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=800&q=80', category: 'canvas designs', subCategory: 'landscape', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1606663889134-b1dedb5ed8b7?w=800&q=80', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1535815506840-88ddefd7fbf9?w=800&q=80', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
   { url: 'https://images.unsplash.com/photo-1600442715817-4d9c8b6c729f?w=800&q=80', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
+  { url: '/img/graph3.webp', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
+  { url: '/img/graph2.jpg', category: 'wall art', subCategory: 'modern', width: 800, height: 600 },
+  { url: '/img/graph1.webp', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
+  { url: '/img/tat.png', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
+  { url: '/img/tat-5.png', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
+  { url: '/img/tat-6.png', category: 'tattoos', subCategory: 'traditional', width: 800, height: 600 },
+  { url: '/img/tat-7.png', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
+  { url: '/img/tat-8.png', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
+  { url: '/img/wall1.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/wall2.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/pier.jpg', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
+  { url: '/img/pier.webp', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
+  { url: '/img/piercing-5.png', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
 ];
 
 const Gallery: React.FC = () => {
@@ -48,7 +58,7 @@ const Gallery: React.FC = () => {
     'piercings': ['all', 'ear', 'nose', 'lip'],
   };
 
-  const filteredImages = images.filter(image => 
+  const filteredImages = images.filter(image =>
     (activeCategory === 'all' || image.category === activeCategory) &&
     (activeSubCategory === 'all' || image.subCategory === activeSubCategory)
   );
@@ -87,11 +97,11 @@ const Gallery: React.FC = () => {
 
   return (
     <section className="py-20 bg-gradient-to-r from-orange-50 via-white to-orange-50 w-full overflow-hidden" id='gallery'>
-    <div className="container mx-auto px-4">
-      <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gray-800">Our Masterpieces</h2>
-      <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-        Explore our diverse collection of tattoos, piercings, wall art, and canvas designs. Each piece tells a unique story and showcases our commitment to artistic excellence.
-      </p>
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gray-800">Our Masterpieces</h2>
+        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+          Explore our diverse collection of tattoos, piercings, wall art, and canvas designs. Each piece tells a unique story and showcases our commitment to artistic excellence.
+        </p>
 
         {/* Main Categories */}
         <div className="flex flex-wrap justify-center gap-4 mb-6">
@@ -99,18 +109,17 @@ const Gallery: React.FC = () => {
 
             <motion.button
               key={category}
-               className={`px-6 py-2 rounded-full font-medium transition-all ${
-              activeCategory === category
-                ? 'bg-orange-600 text-white shadow-lg'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              className={`px-6 py-2 rounded-full font-medium transition-all ${activeCategory === category
+                  ? 'bg-orange-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
               onClick={() => {
                 setActiveCategory(category);
                 setActiveSubCategory('all');
               }}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
-              </motion.button>
+            </motion.button>
           ))}
         </div>
 
@@ -118,17 +127,16 @@ const Gallery: React.FC = () => {
         {activeCategory !== 'all' && subCategories[activeCategory] && (
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {subCategories[activeCategory].map(subCategory => (
-               <motion.button
+              <motion.button
                 key={subCategory}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
-                  activeSubCategory === subCategory
+                className={`px-6 py-2 rounded-full font-medium transition-all ${activeSubCategory === subCategory
                     ? 'bg-orange-600 text-white shadow-lg'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                  }`}
                 onClick={() => setActiveSubCategory(subCategory)}
               >
                 {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}
-                </motion.button>
+              </motion.button>
             ))}
           </div>
         )}
@@ -169,7 +177,7 @@ const Gallery: React.FC = () => {
             <CarouselNext />
           </Carousel>
         </div>
-        </div>
+      </div>
 
       {/* Thumbnails Below the Carousel 
       <div className="mt-8 flex flex-wrap justify-center gap-4">
