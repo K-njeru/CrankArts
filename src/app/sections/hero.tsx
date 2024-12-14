@@ -8,12 +8,12 @@ import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 
 const carouselData = [
   {
-    image: 'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
+    image: '/img/crank.jpg',
     title: 'CRANK ARTS',
     description: 'Bringing your wildest imaginations to life through stunningly detailed tattoo art.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1667514045884-ea015752f06b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YWZyaWNhbiUyMHRhdHRvb3N8ZW58MHx8MHx8fDA%3D',
+    image: 'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
     title: 'Traditional Tattoos',
     description: 'Timeless tattoo designs that stand the test of time with bold lines and vibrant colors.',
   },
@@ -238,7 +238,7 @@ export default function Hero() {
       </div>
 
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none filter blur-sm"
         style={{
           background: 'radial-gradient(circle at calc(var(--mouse-x) * 100%) calc(var(--mouse-y) * 100%), rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 20%)',
         }}

@@ -60,17 +60,33 @@ const Footer: React.FC = () => {
             <h3 className="text-2xl font-bold mb-6 text-orange-600">Contact Us</h3>
             <ul className="space-y-4">
               <li className="flex items-center">
-                <MapPin className="w-5 h-5 mr-3 text-orange-500" />
-                <span>Gate C Street, Crank Arts Studio, Juja</span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Crank+Arts+Studio+Juja+Kenya"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:underline hover:text-orange-500 transition-colors duration-300"
+                >
+                  <MapPin className="w-5 h-5 mr-3 text-orange-500" />
+                  <span>Gate C Street, Crank Arts Studio, Juja</span>
+                </a>
               </li>
               <li className="flex items-center">
-                <Phone className="w-5 h-5 mr-3 text-orange-500" />
-                <span>(254) 794-298696</span>
+                <a
+                  href="tel:+254794298696"
+                  className="flex items-center hover:underline hover:text-orange-500 transition-colors duration-300"
+                >
+                  <Phone className="w-5 h-5 mr-3 text-orange-500" />
+                  <span>(254) 794-298696</span>
+                </a>
               </li>
+
               <li className="flex items-center">
-                <Mail className="w-5 h-5 mr-3 text-orange-500" />
-                <a href="mailto:info@crankarts.com" className="hover:text-orange-500 transition-colors duration-300">
-                  info@crankarts.com
+                <a
+                  href="mailto:info@crankarts.com"
+                  className="flex items-center hover:underline hover:text-orange-500 transition-colors duration-300"
+                >
+                  <Mail className="w-5 h-5 mr-3 text-orange-500" />
+                  <span>info@crankarts.com</span>
                 </a>
               </li>
             </ul>
@@ -81,7 +97,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-orange-300 pt-8 mt-8">
           <div className="flex justify-center space-x-6">
             {[
-               {
+              {
                 icon: () => (
                   <svg
                     fill="currentColor"
@@ -109,7 +125,7 @@ const Footer: React.FC = () => {
                 href: 'https://x.com'
               },
               { icon: Facebook, href: 'https://facebook.com' },
-             
+
             ].map(({ icon: Icon, href }, index) => (
               <a
                 key={index}
@@ -132,23 +148,6 @@ const Footer: React.FC = () => {
           © {new Date().getFullYear()} Crank Arts. All rights reserved.
         </div>
       </div>
-
-      {/* Decorative Elements 
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180">
-        <svg
-          className="relative block w-full h-20"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          preserveAspectRatio="none"
-        >
-          <path
-            fill="#FFF"
-            fillOpacity="0.2"
-            d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,149.3C960,128,1056,128,1152,149.3C1248,171,1344,213,1392,234.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
-      */}
     </footer>
   );
 };

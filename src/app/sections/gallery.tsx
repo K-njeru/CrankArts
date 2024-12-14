@@ -1,43 +1,58 @@
+
 'use client'
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { X, ZoomIn, ZoomOut } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import useEmblaCarousel from 'embla-carousel-react'
 
 type ImageData = {
   url: string;
   category: string;
+  subCategory: string;
   width: number;
   height: number;
 };
 
 const images: ImageData[] = [
-  { url: '/img/graph3.webp', category: 'wall art', width: 400, height: 300 },
-  { url: '/img/graph2.jpg', category: 'wall art', width: 400, height: 300 },
-  { url: '/img/graph1.webp', category: 'wall art', width: 400, height: 300 },
-  { url: '/img/tat.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat-5.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat-6.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat-7.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/tat-8.png', category: 'tattoos', width: 400, height: 300 },
-  { url: '/img/wall1.jpg', category: 'custom designs', width: 400, height: 300 },
-  { url: '/img/wall2.jpg', category: 'custom designs', width: 400, height: 300 },
-  { url: '/img/pier.jpg', category: 'piercings', width: 400, height: 300 },
-  { url: '/img/pier.webp', category: 'piercings', width: 400, height: 300 },
-  { url: '/img/piercing-5.png', category: 'piercings', width: 400, height: 300 },
+  { url: 'https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=800&q=80', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&q=80', category: 'wall art', subCategory: 'modern', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=800&q=80', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=800&q=80', category: 'tattoos', subCategory: 'traditional', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1542727365-19732a80dcfd?w=800&q=80', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1610890690846-5149750c8634?w=800&q=80', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=800&q=80', category: 'canvas designs', subCategory: 'landscape', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1606663889134-b1dedb5ed8b7?w=800&q=80', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1535815506840-88ddefd7fbf9?w=800&q=80', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
+  { url: 'https://images.unsplash.com/photo-1600442715817-4d9c8b6c729f?w=800&q=80', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
 ];
 
 const Gallery: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeSubCategory, setActiveSubCategory] = useState<string>('all');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' })
 
-  const categories = ['all', 'wall art', 'tattoos', 'custom designs', 'piercings'];
+  const categories = ['all', 'wall art', 'tattoos', 'canvas designs', 'piercings'];
 
-  const filteredImages = activeCategory === 'all'
-    ? images
-    : images.filter(image => image.category === activeCategory);
+  const subCategories: { [key: string]: string[] } = {
+    'all': ['all'],
+    'wall art': ['all', 'abstract', 'modern'],
+    'tattoos': ['all', 'traditional', 'modern', 'minimalist'],
+    'canvas designs': ['all', 'landscape', 'portrait'],
+    'piercings': ['all', 'ear', 'nose', 'lip'],
+  };
+
+  const filteredImages = images.filter(image => 
+    (activeCategory === 'all' || image.category === activeCategory) &&
+    (activeSubCategory === 'all' || image.subCategory === activeSubCategory)
+  );
 
   const handleImageClick = useCallback((url: string) => {
     setSelectedImage(url);
@@ -53,65 +68,132 @@ const Gallery: React.FC = () => {
     setIsZoomed(prev => !prev);
   }, []);
 
+  useEffect(() => {
+    if (emblaApi) {
+      const animateCarousel = () => {
+        emblaApi.scrollTo(0);
+        setTimeout(() => {
+          emblaApi.scrollTo(1);
+          setTimeout(() => {
+            emblaApi.scrollTo(0);
+          }, 300);
+        }, 300);
+      };
+
+      const interval = setInterval(animateCarousel, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, [emblaApi]);
+
   return (
     <section className="py-20 bg-gradient-to-r from-orange-50 via-white to-orange-50 w-full overflow-hidden" id='gallery'>
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gray-800">Our Masterpieces</h2>
-        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Explore our diverse collection of tattoos, piercings, wall art, and custom designs. Each piece tells a unique story and showcases our commitment to artistic excellence.
-        </p>
+    <div className="container mx-auto px-4">
+      <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gray-800">Our Masterpieces</h2>
+      <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        Explore our diverse collection of tattoos, piercings, wall art, and canvas designs. Each piece tells a unique story and showcases our commitment to artistic excellence.
+      </p>
 
-        {/* Filter Options */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Main Categories */}
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
           {categories.map(category => (
+
             <motion.button
               key={category}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
-                activeCategory === category
-                  ? 'bg-orange-600 text-white shadow-lg'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+               className={`px-6 py-2 rounded-full font-medium transition-all ${
+              activeCategory === category
+                ? 'bg-orange-600 text-white shadow-lg'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+              onClick={() => {
+                setActiveCategory(category);
+                setActiveSubCategory('all');
+              }}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
-            </motion.button>
+              </motion.button>
           ))}
         </div>
 
-        {/* Image Grid */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
+        {/* Sub Categories */}
+        {activeCategory !== 'all' && subCategories[activeCategory] && (
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {subCategories[activeCategory].map(subCategory => (
+               <motion.button
+                key={subCategory}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  activeSubCategory === subCategory
+                    ? 'bg-orange-600 text-white shadow-lg'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+                onClick={() => setActiveSubCategory(subCategory)}
+              >
+                {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}
+                </motion.button>
+            ))}
+          </div>
+        )}
+
+        {/* Carousel */}
+        <div className="relative w-full max-w-5xl mx-auto">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+            ref={emblaRef}
+          >
+            <CarouselContent>
+              {filteredImages.map((image, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="overflow-hidden">
+                      <CardContent className="p-0">
+                        <Image
+                          src={image.url}
+                          alt={`${image.category} - ${image.subCategory}`}
+                          width={image.width}
+                          height={image.height}
+                          className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
+                          onClick={() => handleImageClick(image.url)}
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
+                        />
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+        </div>
+
+      {/* Thumbnails Below the Carousel 
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
           {filteredImages.map((image, index) => (
-            <motion.div
+            <div
               key={index}
-              className="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.2 }}
+              className="w-24 h-24 cursor-pointer overflow-hidden border rounded-lg"
               onClick={() => handleImageClick(image.url)}
             >
               <Image
                 src={image.url}
-                alt={image.category}
-                width={image.width}
-                height={image.height}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                alt={`${image.category} - ${image.subCategory}`}
+                width={100}
+                height={100}
+                className="w-full h-full object-cover"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
-                loading="lazy"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p className="text-white text-lg font-semibold">{image.category}</p>
-              </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
+      */}
 
       {/* Modal for Image Viewing */}
       <AnimatePresence>
@@ -125,13 +207,13 @@ const Gallery: React.FC = () => {
           >
             <div className="relative max-w-4xl w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
               <button
-                className="absolute top-4 right-4 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-colors z-10"
+                className="absolute top-4 right-4 text-white p-2 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors z-10"
                 onClick={closeModal}
               >
                 <X size={24} />
               </button>
               <button
-                className="absolute bottom-4 right-4 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-colors z-10"
+                className="absolute bottom-4 right-4 text-white p-2 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors z-10"
                 onClick={toggleZoom}
               >
                 {isZoomed ? <ZoomOut size={24} /> : <ZoomIn size={24} />}
@@ -162,3 +244,4 @@ const Gallery: React.FC = () => {
 };
 
 export default Gallery;
+
