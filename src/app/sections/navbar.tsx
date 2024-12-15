@@ -108,7 +108,7 @@ export default function Navbar() {
                       <div className="p-4 space-y-4">
                         <ServiceItem icon={<Anchor className="text-orange-500" />} title="Tattooing" description="Professional tattoo application to express yourself." />
                         <ServiceItem icon={<Zap className="text-orange-500" />} title="Piercing" description="High-quality piercing for all styles and tastes." />
-                        <ServiceItem icon={<Users className="text-orange-500" />} title="Custom Designs" description="Unique, personalized artwork tailored to your vision." />
+                        <ServiceItem icon={<Users className="text-orange-500" />} title="Canvas Designs" description="Unique, personalized artwork tailored to your vision." />
                         <ServiceItem icon={<Building2 className="text-orange-500" />} title="Wall Art" description="Transform your walls with personalized art." />
                       </div>
                     </div>

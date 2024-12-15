@@ -16,7 +16,7 @@ export default function WhyChooseUs() {
         ></path>
       </svg>
       <div className="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row items-center relative z-10 mt-16">
-        <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
+        {/* <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
           <div className="relative w-full h-[400px]">
             <Image
               src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
@@ -28,7 +28,24 @@ export default function WhyChooseUs() {
               priority
             />
           </div>
+        </div>  */}
+        <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
+          <div className="relative w-full h-[400px]">
+            <video
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              className="rounded-lg shadow-lg w-full h-full object-cover"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
+
         <div className="flex flex-col space-y-8 w-full lg:w-1/2">
           <h2 className="text-4xl font-bold text-gray-800 mb-6">Why Choose Us</h2>
           <div className="flex items-start space-x-4">

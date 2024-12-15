@@ -34,8 +34,8 @@ export default function Services() {
           />
           <ServiceItem
             icon={<Users className="text-orange-500" />}
-            title="Custom Designs"
-            description="Collaborate with our experienced artists to bring your vision to life. Every custom design is a story waiting to be told, making your tattoo a true work of art."
+            title="Canvas Designs"
+            description="Collaborate with our experienced artists to bring your vision to life. Every canvas design is a story waiting to be told, making your tattoo a true work of art."
           />
           <ServiceItem
             icon={<Building2 className="text-orange-500" />}
