@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin, Target } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -72,11 +72,11 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <a
-                  href="tel:+254794298696"
+                  href="tel:+254706366408"
                   className="flex items-center hover:underline hover:text-orange-500 transition-colors duration-300"
                 >
                   <Phone className="w-5 h-5 mr-3 text-orange-500" />
-                  <span>(254) 794-298696</span>
+                  <span>(254) 706366408</span>
                 </a>
               </li>
 
@@ -108,9 +108,9 @@ const Footer: React.FC = () => {
                     <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"></path>
                   </svg>
                 ),
-                href: 'https://tiktok.com'
+                href: 'https:tiktok.com/@crank_arts?_t=8sDe41CS0gQ&_r=1', target:'blank'
               },
-              { icon: Instagram, href: 'https://instagram.com' },
+              { icon: Instagram, href: 'https://www.instagram.com/crank_arts/profilecard/?igsh=MXNtdWVpYjFxanFtOQ==', target:'blank' } ,
               {
                 icon: () => (
                   <svg
@@ -122,9 +122,9 @@ const Footer: React.FC = () => {
                     <path d="M7.55 7.05l4.1 4.94-4.1 5.02h2.57l2.6-3.22 2.56 3.22h2.67L14 12l4.2-4.95h-2.5l-2.45 2.96-2.5-2.96H7.55z"></path>
                   </svg>
                 ),
-                href: 'https://x.com'
+                href: 'https://x.com' , target:'blank'
               },
-              { icon: Facebook, href: 'https://facebook.com' },
+              { icon: Facebook, href: 'https://facebook.com' , target:'blank'},
 
             ].map(({ icon: Icon, href }, index) => (
               <a

@@ -1,13 +1,12 @@
-
 'use client'
 
 import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
-import { X, ZoomIn, ZoomOut } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
 import useEmblaCarousel from 'embla-carousel-react'
+import AutoplayPlugin from 'embla-carousel-autoplay'
 
 type ImageData = {
   url: string;
@@ -18,24 +17,30 @@ type ImageData = {
 };
 
 const images: ImageData[] = [
-  { url: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=800&q=80', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=800&q=80', category: 'tattoos', subCategory: 'traditional', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1542727365-19732a80dcfd?w=800&q=80', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1610890690846-5149750c8634?w=800&q=80', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=800&q=80', category: 'canvas designs', subCategory: 'landscape', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1606663889134-b1dedb5ed8b7?w=800&q=80', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
-  { url: 'https://images.unsplash.com/photo-1600442715817-4d9c8b6c729f?w=800&q=80', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
-  { url: '/img/graph3.webp', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
-  { url: '/img/graph2.jpg', category: 'wall art', subCategory: 'modern', width: 800, height: 600 },
-  { url: '/img/graph1.webp', category: 'wall art', subCategory: 'abstract', width: 800, height: 600 },
-  { url: '/img/tat.png', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
-  { url: '/img/tat-5.png', category: 'tattoos', subCategory: 'modern', width: 800, height: 600 },
-  { url: '/img/tat-6.png', category: 'tattoos', subCategory: 'traditional', width: 800, height: 600 },
-  { url: '/img/tat-7.png', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
-  { url: '/img/tat-8.png', category: 'tattoos', subCategory: 'minimalist', width: 800, height: 600 },
-  { url: '/img/wall1.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
-  { url: '/img/wall2.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/arm-tat1.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat2.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat3.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat4.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat5.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat6.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat7.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat8.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat9.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/arm-tat10.jpg', category: 'tattoos', subCategory: 'arm', width: 800, height: 600 },
+  { url: '/img/chest-tat1.jpg', category: 'tattoos', subCategory: 'chest', width: 800, height: 600 },
+  { url: '/img/chest-tat2.jpg', category: 'tattoos', subCategory: 'chest', width: 800, height: 600 },
+  { url: '/img/chest-tat3.jpg', category: 'tattoos', subCategory: 'chest', width: 800, height: 600 },
+  { url: '/img/leg-tat1.jpg', category: 'tattoos', subCategory: 'thigh & calf', width: 800, height: 600 },
+  { url: '/img/back-tat1.jpg', category: 'tattoos', subCategory: 'back', width: 800, height: 600 },
+  { url: '/img/others-tat1.jpg', category: 'tattoos', subCategory: 'others', width: 800, height: 600 },
+  { url: '/img/landscape1.jpg', category: 'canvas designs', subCategory: 'landscape', width: 800, height: 600 },
+  { url: '/img/landscape2.jpg', category: 'canvas designs', subCategory: 'landscape', width: 800, height: 600 },
+  { url: '/img/potrait1.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/potrait2.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/potrait3.jpg', category: 'canvas designs', subCategory: 'portrait', width: 800, height: 600 },
+  { url: '/img/graphiti1.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
+  { url: '/img/graphiti2.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
+  { url: '/img/graphiti3.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
   { url: '/img/pier.jpg', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
   { url: '/img/pier.webp', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
   { url: '/img/piercing-5.png', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
@@ -46,16 +51,20 @@ const Gallery: React.FC = () => {
   const [activeSubCategory, setActiveSubCategory] = useState<string>('all');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' })
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start' },
+    [AutoplayPlugin({ delay: 5000, stopOnInteraction: true, stopOnMouseEnter: true, stopOnLastSnap: false })]
+  )
+  const [thumbsRef, thumbsApi] = useEmblaCarousel({ containScroll: 'keepSnaps', dragFree: true })
 
   const categories = ['all', 'wall art', 'tattoos', 'canvas designs', 'piercings'];
 
   const subCategories: { [key: string]: string[] } = {
     'all': ['all'],
-    'wall art': ['all', 'abstract', 'modern'],
-    'tattoos': ['all', 'traditional', 'modern', 'minimalist'],
+    'wall art': ['all', 'Graffiti', 'Functional'],
+    'tattoos': ['all', 'arm', 'thigh & calf', 'back', 'chest' , 'others'],
     'canvas designs': ['all', 'landscape', 'portrait'],
-    'piercings': ['all', 'ear', 'nose', 'lip'],
+    'piercings': ['all', 'ear', 'nose', 'lip', 'others'],
   };
 
   const filteredImages = images.filter(image =>
@@ -78,21 +87,16 @@ const Gallery: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (emblaApi) {
-      const animateCarousel = () => {
-        emblaApi.scrollTo(0);
-        setTimeout(() => {
-          emblaApi.scrollTo(1);
-          setTimeout(() => {
-            emblaApi.scrollTo(0);
-          }, 300);
-        }, 300);
-      };
-
-      const interval = setInterval(animateCarousel, 3000);
-
-      return () => clearInterval(interval);
+    if (emblaApi && thumbsApi) {
+      emblaApi.on('select', () => {
+        const index = emblaApi.selectedScrollSnap();
+        thumbsApi.scrollTo(index);
+      });
     }
+  }, [emblaApi, thumbsApi]);
+
+  const scrollToIndex = useCallback((index: number) => {
+    emblaApi && emblaApi.scrollTo(index);
   }, [emblaApi]);
 
   return (
@@ -106,13 +110,13 @@ const Gallery: React.FC = () => {
         {/* Main Categories */}
         <div className="flex flex-wrap justify-center gap-4 mb-6">
           {categories.map(category => (
-
             <motion.button
               key={category}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${activeCategory === category
+              className={`px-6 py-2 rounded-full font-medium transition-all ${
+                activeCategory === category
                   ? 'bg-orange-600 text-white shadow-lg'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+              }`}
               onClick={() => {
                 setActiveCategory(category);
                 setActiveSubCategory('all');
@@ -129,10 +133,11 @@ const Gallery: React.FC = () => {
             {subCategories[activeCategory].map(subCategory => (
               <motion.button
                 key={subCategory}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${activeSubCategory === subCategory
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  activeSubCategory === subCategory
                     ? 'bg-orange-600 text-white shadow-lg'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                }`}
                 onClick={() => setActiveSubCategory(subCategory)}
               >
                 {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}
@@ -143,64 +148,77 @@ const Gallery: React.FC = () => {
 
         {/* Carousel */}
         <div className="relative w-full max-w-5xl mx-auto">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-            ref={emblaRef}
-          >
-            <CarouselContent>
-              {filteredImages.map((image, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="overflow-hidden">
-                      <CardContent className="p-0">
-                        <Image
-                          src={image.url}
-                          alt={`${image.category} - ${image.subCategory}`}
-                          width={image.width}
-                          height={image.height}
-                          className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
-                          onClick={() => handleImageClick(image.url)}
-                          placeholder="blur"
-                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
-                        />
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          {filteredImages.length > 0 ? (
+            <>
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {filteredImages.map((image, index) => (
+                    <div key={index} className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.33%]">
+                      <div className="p-1">
+                        <Card className="overflow-hidden">
+                          <CardContent className="p-0">
+                            <Image
+                              src={image.url}
+                              alt={`${image.category} - ${image.subCategory}`}
+                              width={image.width}
+                              height={image.height}
+                              className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
+                              onClick={() => handleImageClick(image.url)}
+                              placeholder="blur"
+                              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <button
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 transition-all duration-200 rounded-full p-2 z-10"
+                onClick={() => emblaApi?.scrollPrev()}
+              >
+                <ChevronLeft className="text-orange-300 hover:text-orange-500 transition-colors duration-300" />
+              </button>
+              <button
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 transition-all duration-200 rounded-full p-2 z-10"
+                onClick={() => emblaApi?.scrollNext()}
+              >
+                <ChevronRight className="text-orange-300 hover:text-orange-500 transition-colors duration-300" />
+              </button>
+            </>
+          ) : (
+            <div className="text-center text-gray-500 py-20">No images available for the selected category.</div>
+          )}
         </div>
-      </div>
 
-      {/* Thumbnails Below the Carousel 
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
-          {filteredImages.map((image, index) => (
-            <div
-              key={index}
-              className="w-24 h-24 cursor-pointer overflow-hidden border rounded-lg"
-              onClick={() => handleImageClick(image.url)}
-            >
-              <Image
-                src={image.url}
-                alt={`${image.category} - ${image.subCategory}`}
-                width={100}
-                height={100}
-                className="w-full h-full object-cover"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
-              />
+        {/* Thumbnails - visible only on small screens */}
+        {filteredImages.length > 0 && (
+          <div className="mt-4 max-w-5xl mx-auto md:hidden">
+            <div className="overflow-hidden" ref={thumbsRef}>
+              <div className="flex">
+                {filteredImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-20 h-20 mr-2 cursor-pointer"
+                    onClick={() => scrollToIndex(index)}
+                  >
+                    <Image
+                      src={image.url}
+                      alt={`${image.category} - ${image.subCategory} thumbnail`}
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover rounded-md"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
-      */}
 
       {/* Modal for Image Viewing */}
       <AnimatePresence>
@@ -235,6 +253,7 @@ const Gallery: React.FC = () => {
                   src={selectedImage}
                   alt="Selected artwork"
                   layout="fill"
+                  loading="lazy"
                   objectFit="contain"
                   quality={100}
                   className={`max-w-full max-h-full ${isZoomed ? 'cursor-move' : 'cursor-zoom-in'}`}
