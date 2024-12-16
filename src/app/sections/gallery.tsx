@@ -96,8 +96,11 @@ const Gallery: React.FC = () => {
   }, [emblaApi, thumbsApi]);
 
   const scrollToIndex = useCallback((index: number) => {
-    emblaApi && emblaApi.scrollTo(index);
+    if (emblaApi) {
+      emblaApi.scrollTo(index);
+    }
   }, [emblaApi]);
+  
 
   return (
     <section className="py-20 bg-gradient-to-r from-orange-50 via-white to-orange-50 w-full overflow-hidden" id='gallery'>
@@ -258,6 +261,7 @@ const Gallery: React.FC = () => {
                   className={`max-w-full max-h-full ${isZoomed ? 'cursor-move' : 'cursor-zoom-in'}`}
                   onClick={toggleZoom}
                   draggable={false}
+                  loading='lazy'
                 />
               </motion.div>
             </div>
