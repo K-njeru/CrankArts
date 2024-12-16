@@ -253,7 +253,6 @@ const Gallery: React.FC = () => {
                   src={selectedImage}
                   alt="Selected artwork"
                   layout="fill"
-                  loading="lazy"
                   objectFit="contain"
                   quality={100}
                   className={`max-w-full max-h-full ${isZoomed ? 'cursor-move' : 'cursor-zoom-in'}`}
