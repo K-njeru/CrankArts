@@ -147,8 +147,9 @@ const Gallery: React.FC = () => {
         )}
 
         {/* Carousel */}
+        <div className="relative w-full max-w-5xl mx-auto">
           {filteredImages.length > 0 ? (
-            <div className="relative w-full max-w-5xl mx-auto">
+            <>
               <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex">
                   {filteredImages.map((image, index) => (
@@ -185,13 +186,11 @@ const Gallery: React.FC = () => {
               >
                 <ChevronRight className="text-orange-300 hover:text-orange-500 transition-colors duration-300" />
               </button>
-              </div>          
+            </>
           ) : (
-            <div className="relative w-full max-w-5xl mx-auto">
             <div className="text-center text-gray-500 py-20">No images available for the selected category.</div>
-            </div>
           )}
-        
+        </div>
 
         {/* Thumbnails - visible only on small screens */}
         {filteredImages.length > 0 && (
