@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
 import { X, MapPin, Mail, Phone as Call } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'

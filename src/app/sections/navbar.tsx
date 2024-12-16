@@ -5,7 +5,6 @@ import { Menu, X, ChevronDown, Anchor, Zap, Users, Building2 } from 'lucide-reac
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useState as useState2 } from "react" //This import was already present, but the updates added another one.  This line is to avoid a duplicate import error.
 import StudioModal from "@/components/ui/StudioModal"
 import ArtistModal from "@/components/ui/ArtistModal"
 

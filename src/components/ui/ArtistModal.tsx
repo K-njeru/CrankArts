@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { X, Mail, Phone, Instagram, Twitter, Phone as Call } from 'lucide-react'
+import { X, Phone as Call } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface ArtistModalProps {
