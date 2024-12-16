@@ -188,7 +188,12 @@ export default function Hero() {
           </p>
           <div className="mt-10">
             <button
-              onClick={() => router.push('/book')}
+              onClick={() => {
+                const section = document.getElementById('appointment');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}              
               className="relative bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full overflow-hidden group"
             >
               <span className="relative z-10">Book Your Session</span>

@@ -5,12 +5,17 @@ import { Menu, X, ChevronDown, Anchor, Zap, Users, Building2 } from 'lucide-reac
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useState as useState2 } from "react" //This import was already present, but the updates added another one.  This line is to avoid a duplicate import error.
+import StudioModal from "@/components/ui/StudioModal"
+import ArtistModal from "@/components/ui/ArtistModal"
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState<string>("home")
+  const [artistModalOpen, setArtistModalOpen] = useState(false)
+  const [studioModalOpen, setStudioModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,9 +95,8 @@ export default function Navbar() {
                 <div className="relative group services-dropdown">
                   <button
                     type="button"
-                    className={`flex items-center gap-x-1 text-sm font-semibold leading-6 ${
-                      activeSection === 'services' ? 'text-orange-500' : 'text-gray-300 hover:text-white'
-                    }`}
+                    className={`flex items-center gap-x-1 text-sm font-semibold leading-6 ${activeSection === 'services' ? 'text-orange-500' : 'text-gray-300 hover:text-white'
+                      }`}
                     onMouseEnter={() => setDropdownOpen(true)}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
@@ -117,9 +121,8 @@ export default function Navbar() {
               ) : (
                 <Link
                   href={item.href}
-                  className={`text-sm font-semibold leading-6 relative ${
-                    activeSection === item.href.substring(1) ? 'text-orange-500' : 'text-gray-300 hover:text-orange-500'
-                  } group`}
+                  className={`text-sm font-semibold leading-6 relative ${activeSection === item.href.substring(1) ? 'text-orange-500' : 'text-gray-300 hover:text-orange-500'
+                    } group`}
                 >
                   {item.name}
                   <span className="absolute left-0 top-5 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
@@ -129,7 +132,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        {/*<div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="https://wa.me/254794298696"
             target="_blank"
@@ -138,6 +141,16 @@ export default function Navbar() {
           >
             Artist <span aria-hidden="true" className="ml-2">&rarr;</span>
           </a>
+        </div>
+        */}
+
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <button
+            onClick={() => setStudioModalOpen(true)}
+            className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500 ml-4"
+          >
+            Studio <span aria-hidden="true" className="ml-2">&rarr;</span>
+          </button>
         </div>
 
       </nav>
@@ -169,31 +182,41 @@ export default function Navbar() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
-                        activeSection === item.href.substring(1) ? 'text-orange-500' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                      }`}
+                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${activeSection === item.href.substring(1) ? 'text-orange-500' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                        }`}
                       onClick={() => setMenuOpen(false)}
                     >
                       {item.name}
                     </Link>
                   ))}
                 </div>
-                <div className="py-6">
-                  <a
-                    href="https://wa.me/254794298696"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500"
-                    onClick={() => setMenuOpen(false)}
+                <div className="py-6 flex flex-col">
+                  <button
+                    onClick={() => {
+                      setArtistModalOpen(true);
+                      setMenuOpen(false);
+                    }}
+                    className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500 text-left h-[30px] mt-3"
                   >
                     Artist <span aria-hidden="true" className="ml-2">&rarr;</span>
-                  </a>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStudioModalOpen(true);
+                      setMenuOpen(false);
+                    }}
+                    className="text-sm font-semibold leading-6 text-orange-300 hover:text-orange-500 text-left h-[30px] mt-3"
+                  >
+                    Studio <span aria-hidden="true" className="ml-2">&rarr;</span>
+                  </button>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
       )}
+      <ArtistModal isOpen={artistModalOpen} onClose={() => setArtistModalOpen(false)} />
+      <StudioModal isOpen={studioModalOpen} onClose={() => setStudioModalOpen(false)} />
     </header>
   )
 }

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+
 import { Coffee, Eye, UserCheck } from 'lucide-react';
 
 export default function WhyChooseUs() {
@@ -32,7 +32,7 @@ export default function WhyChooseUs() {
         <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
           <div className="relative w-full h-[400px]">
             <video
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              src="vid1.mov"
               className="rounded-lg shadow-lg w-full h-full object-cover"
               controls
               autoPlay
