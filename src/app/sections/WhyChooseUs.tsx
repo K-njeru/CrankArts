@@ -1,7 +1,46 @@
-
 import { Coffee, Eye, UserCheck } from 'lucide-react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export default function WhyChooseUs() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleFullScreenChange = useCallback(() => {
+    if (!videoRef.current || !containerRef.current) return;
+
+    if (document.fullscreenElement === videoRef.current) {
+      videoRef.current.style.objectFit = 'contain';
+      containerRef.current.classList.add(
+        'bg-gradient-to-r',
+        'from-orange-50',
+        'via-white',
+        'to-orange-50'
+      );
+    } else {
+      videoRef.current.style.objectFit = 'cover';
+      containerRef.current.classList.remove(
+        'bg-gradient-to-r',
+        'from-orange-50',
+        'via-white',
+        'to-orange-50'
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    const fullScreenEvents = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
+
+    fullScreenEvents.forEach(eventName => {
+      document.addEventListener(eventName, handleFullScreenChange);
+    });
+
+    return () => {
+      fullScreenEvents.forEach(eventName => {
+        document.removeEventListener(eventName, handleFullScreenChange);
+      });
+    };
+  }, [handleFullScreenChange]);
+
   return (
     <section className="relative py-20 bg-gradient-to-r from-orange-50 via-white to-orange-50 w-full overflow-hidden" id='studio'>
       <svg
@@ -9,6 +48,7 @@ export default function WhyChooseUs() {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 640"
         preserveAspectRatio="none"
+        aria-hidden="true"
       >
         <path
           fill="currentColor"
@@ -16,30 +56,20 @@ export default function WhyChooseUs() {
         ></path>
       </svg>
       <div className="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row items-center relative z-10 mt-16">
-        {/* <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
-          <div className="relative w-full h-[400px]">
-            <Image
-              src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-              alt="Tattoo artist at work"
-              fill
-              style={{ objectFit: 'cover' }}
-              className="rounded-lg shadow-lg"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-            />
-          </div>
-        </div>  */}
         <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-16 w-full lg:w-1/2">
-          <div className="relative w-full h-[400px]">
+          <div ref={containerRef} 
+          className="relative w-full h-[400px] flex items-center justify-center overflow-hidden group">
             <video
-              src="vid1.mov"
-              className="rounded-lg shadow-lg w-full h-full object-cover"
+              ref={videoRef}
+              src="img/crank.mp4"
+              className="rounded-lg shadow-lg h-full w-[400px] object-cover transform scale-96 transition-transform duration-1000 group-hover:scale-100"
               controls
               autoPlay
               muted
               loop
               playsInline
               preload="auto"
+              aria-label="Tattoo studio showcase video"
             >
               Your browser does not support the video tag.
             </video>
@@ -49,7 +79,7 @@ export default function WhyChooseUs() {
         <div className="flex flex-col space-y-8 w-full lg:w-1/2">
           <h2 className="text-4xl font-bold text-gray-800 mb-6">Why Choose Us</h2>
           <div className="flex items-start space-x-4">
-            <Coffee className="text-orange-500 w-10 h-10 flex-shrink-0" />
+            <Coffee className="text-orange-500 w-10 h-10 flex-shrink-0" aria-hidden="true" />
             <div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Relaxed Atmosphere</h3>
               <p className="text-gray-600">
@@ -58,7 +88,7 @@ export default function WhyChooseUs() {
             </div>
           </div>
           <div className="flex items-start space-x-4">
-            <Eye className="text-orange-500 w-10 h-10 flex-shrink-0" />
+            <Eye className="text-orange-500 w-10 h-10 flex-shrink-0" aria-hidden="true" />
             <div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Your Vision Applied</h3>
               <p className="text-gray-600">
@@ -67,7 +97,7 @@ export default function WhyChooseUs() {
             </div>
           </div>
           <div className="flex items-start space-x-4">
-            <UserCheck className="text-orange-500 w-10 h-10 flex-shrink-0" />
+            <UserCheck className="text-orange-500 w-10 h-10 flex-shrink-0" aria-hidden="true" />
             <div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Experienced Artist</h3>
               <p className="text-gray-600">
@@ -80,3 +110,4 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
