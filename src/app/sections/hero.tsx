@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 
 const carouselData = [
   {
-    image: '/img/crank.jpg',
+    image: '/img/crank.png',
     title: 'CRANK ARTS',
     description: 'Bringing your wildest imaginations to life through stunningly detailed tattoo art.',
   },

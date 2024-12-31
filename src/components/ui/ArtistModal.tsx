@@ -54,7 +54,7 @@ export default function ArtistModal({ isOpen, onClose }: ArtistModalProps) {
               </div>
               <div className="flex flex-col items-center">
                 <Image
-                  src="/img/crank.jpg"
+                  src="/img/crank.png"
                   alt="Crank Arts Studio"
                   width={300}
                   height={200}
