@@ -64,9 +64,9 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
         <Hero />
+        <Gallery />
         <Services />
         <WhyChooseUs />
-        <Gallery />
         <BookAppointment />
         <Footer />
       </main>
