@@ -4,7 +4,9 @@ import { Upload } from 'lucide-react';
 import MessageBanner from '@/components/ui/MessageBanner';
 import emailjs from '@emailjs/browser';
 import { emailConfig } from '@/config/emailjs';
-import { compressImage } from '@/utils/imageCompression';
+//import { compressImage } from '@/utils/imageCompression';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '@/config/firebaseConfig';
 
 export default function BookAppointment() {
   const [formData, setFormData] = useState({
@@ -65,6 +67,12 @@ export default function BookAppointment() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const uploadToFirebase = async (file: File): Promise<string> => {
+    const storageRef = ref(storage, `tattoos/${Date.now()}_${file.name}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setBannerMessage(null);
@@ -74,12 +82,12 @@ export default function BookAppointment() {
     setIsSubmitting(true);
 
     try {
-      // Compress and convert image to base64 if it exists
-      let imageBase64 = '';
+      // Await image upload to firebase storage then send image url
+      let imageUrl = '';
       if (formData.tattoo_image) {
-        imageBase64 = await compressImage(formData.tattoo_image);
+        imageUrl = await uploadToFirebase(formData.tattoo_image);
       }
-
+      
       // Prepare template parameters
       const templateParams = {
         from_name: formData.name,
@@ -88,7 +96,7 @@ export default function BookAppointment() {
         preferred_date: formData.date,
         preferred_time: formData.time,
         message: formData.message,
-        tattoo_image: imageBase64,
+        tattoo_image_url: imageUrl,
         file_name: formData.tattoo_image?.name || 'No image attached'
       };
 
@@ -215,7 +223,7 @@ export default function BookAppointment() {
               ></textarea>
             </div>
             <div>
-              <label className="block text-gray-800 mb-2">Tattoo Design (Optional)</label>
+              <label className="block text-gray-800 mb-2">Express Ink Vision</label>
               <div className="relative">
                 <input
                   type="file"
@@ -227,14 +235,13 @@ export default function BookAppointment() {
                 />
                 <label
                   htmlFor="fileInput"
-                  className="flex items-center justify-center w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg cursor-pointer hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 group"
+                  className="flex items-center justify-center w-full px-4 py-3 bg-gradient-to-r from-yellow-200 to-orange-600 text-black rounded-lg cursor-pointer hover:from-orange-600 hover:to-yellow-200 transition-all duration-300 group"
                 >
-                  <Upload className="w-6 h-6 mr-2 group-hover:animate-bounce" />
-                  <span className="font-medium">Upload Your Design</span>
+                  <Upload className="w-6 h-6 mr-2 text-orange-600 group-hover:text-yellow-200 group-hover:animate-bounce" />
+                  <span className="font-medium">Upload Design</span>
                   <span className="ml-2 text-xs opacity-70">(Max 5MB)</span>
                 </label>
               </div>
-              <p className="text-sm text-gray-500 mt-1">Note: The image will be compressed before sending to ensure successful delivery.</p>
               {errors.tattoo_image && <p className="text-red-500 text-sm mt-1">{errors.tattoo_image}</p>}
             </div>
             {formData.tattoo_image && (

@@ -17,7 +17,7 @@ const MessageBanner: React.FC<MessageBannerProps> = ({ message, type, onClose })
   }, [onClose]); // Add onClose as a dependency to ensure it's correctly handled
 
   return (
-    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg flex items-center justify-between ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 p-4 sm:p-6 w-[80%] sm:w-auto rounded-lg shadow-lg flex items-center justify-between ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
       <p className="text-white mr-4">{message}</p>
       <button
         onClick={onClose}

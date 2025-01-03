@@ -129,10 +129,10 @@ export default function Hero() {
     setCurrentSlide((prev) => (prev - 1 + carouselData.length) % carouselData.length)
   }, [])
 
-  const scrollToServices = () => {
-    const servicesSection = document.getElementById('services')
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' })
+  const scrollToGallery = () => {
+    const gallerySection = document.getElementById('gallery')
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -202,7 +202,7 @@ export default function Hero() {
                 className="cursor-pointer"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
-                onClick={scrollToServices}
+                onClick={scrollToGallery}
               >
                 <ChevronDown size={60} className="text-orange-300 hover:text-orange-500 transition-colors duration-300" />
               </motion.div>

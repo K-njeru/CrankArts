@@ -41,9 +41,8 @@ const images: ImageData[] = [
   { url: '/img/graphiti1.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
   { url: '/img/graphiti2.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
   { url: '/img/graphiti3.jpg', category: 'wall art', subCategory: 'Graffiti', width: 800, height: 600 },
-  { url: '/img/pier.jpg', category: 'piercings', subCategory: 'ear', width: 800, height: 600 },
-  { url: '/img/pier.webp', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
-  { url: '/img/piercing-5.png', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
+  { url: '/img/nose.jpeg', category: 'piercings', subCategory: 'nose', width: 800, height: 600 },
+  { url: '/img/lips.jpeg', category: 'piercings', subCategory: 'lip', width: 800, height: 600 },
 ];
 
 const Gallery: React.FC = () => {
