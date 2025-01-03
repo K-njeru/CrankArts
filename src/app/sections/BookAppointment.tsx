@@ -1,6 +1,10 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import Image from 'next/image';
+import { Upload } from 'lucide-react';
 import MessageBanner from '@/components/ui/MessageBanner';
+import emailjs from '@emailjs/browser';
+import { emailConfig } from '@/config/emailjs';
+import { compressImage } from '@/utils/imageCompression';
 
 export default function BookAppointment() {
   const [formData, setFormData] = useState({
@@ -17,10 +21,14 @@ export default function BookAppointment() {
   const [bannerMessage, setBannerMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init(emailConfig.publicKey);
+  }, []);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -28,20 +36,27 @@ export default function BookAppointment() {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    if (file && !file.type.startsWith('image/')) {
-      setErrors(prev => ({ ...prev, tattoo_image: 'Please select an image file.' }));
-      setBannerMessage({ text: 'Kindly switch your attached file to an image to successfully submit your request.', type: 'error' });
-    } else {
-      setFormData(prev => ({ ...prev, tattoo_image: file }));
-      setErrors(prev => ({ ...prev, tattoo_image: '' }));
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setErrors(prev => ({ ...prev, tattoo_image: 'Please select an image file.' }));
+        setBannerMessage({ text: 'Kindly switch your attached file to an image to successfully submit your request.', type: 'error' });
+      } else if (file.size > 5 * 1024 * 1024) {
+        setErrors(prev => ({ ...prev, tattoo_image: 'File size must not exceed 5 MB.' }));
+      } else {
+        setFormData(prev => ({ ...prev, tattoo_image: file }));
+        setErrors(prev => ({ ...prev, tattoo_image: '' }));
+      }
     }
   };
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
+    const currentDate = new Date().toISOString().split('T')[0];
+
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.phone) newErrors.phone = 'Phone number is required';
     if (!formData.date) newErrors.date = 'Date is required';
+    else if (formData.date < currentDate) newErrors.date = 'Selected date cannot be in the past';
     if (!formData.time) newErrors.time = 'Time is required';
     if (formData.tattoo_image && !formData.tattoo_image.type.startsWith('image/')) {
       newErrors.tattoo_image = 'Please select an image file.';
@@ -58,39 +73,52 @@ export default function BookAppointment() {
 
     setIsSubmitting(true);
 
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null) {
-        if (key === 'tattoo_image' && value instanceof File) {
-          formDataToSend.append(key, value, value.name);
-        } else {
-          formDataToSend.append(key, value as string);
-        }
-      }
-    });
-
     try {
-      const response = await fetch('https://formsubmit.co/ajax/knjeru519@gmail.com', {
-        method: 'POST',
-        body: formDataToSend,
-      });
-
-      if (response.ok) {
-        setBannerMessage({ text: 'Thank you for reaching out. Our Artist will review and get back to you!', type: 'success' });
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          date: '',
-          time: '',
-          message: '',
-          tattoo_image: null,
-        });
-      } else {
-        throw new Error('Form submission failed');
+      // Compress and convert image to base64 if it exists
+      let imageBase64 = '';
+      if (formData.tattoo_image) {
+        imageBase64 = await compressImage(formData.tattoo_image);
       }
-    } catch {
-      setBannerMessage({ text: 'An error occurred. Please try again later.', type: 'error' });
+
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.name,
+        reply_to: formData.email,
+        phone_number: formData.phone,
+        preferred_date: formData.date,
+        preferred_time: formData.time,
+        message: formData.message,
+        tattoo_image: imageBase64,
+        file_name: formData.tattoo_image?.name || 'No image attached'
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        emailConfig.serviceId,
+        emailConfig.templateId,
+        templateParams
+      );
+
+      setBannerMessage({ 
+        text: 'Thank you for reaching out. Our Artist will review and get back to you!',
+        type: 'success' 
+      });
+      
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '',
+        message: '',
+        tattoo_image: null,
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setBannerMessage({ 
+        text: 'An error occurred while sending your request. Please try again later.',
+        type: 'error' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -187,29 +215,41 @@ export default function BookAppointment() {
               ></textarea>
             </div>
             <div>
-              <label className="block text-gray-800 mb-2">
-                Tattoo Image (Optional)
-              </label>
-              <input
-                type="file"
-                name="tattoo_image"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300"
-              />
+              <label className="block text-gray-800 mb-2">Tattoo Design (Optional)</label>
+              <div className="relative">
+                <input
+                  type="file"
+                  id="fileInput"
+                  name="tattoo_image"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  className="hidden"
+                />
+                <label
+                  htmlFor="fileInput"
+                  className="flex items-center justify-center w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg cursor-pointer hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 group"
+                >
+                  <Upload className="w-6 h-6 mr-2 group-hover:animate-bounce" />
+                  <span className="font-medium">Upload Your Design</span>
+                  <span className="ml-2 text-xs opacity-70">(Max 5MB)</span>
+                </label>
+              </div>
+              <p className="text-sm text-gray-500 mt-1">Note: The image will be compressed before sending to ensure successful delivery.</p>
               {errors.tattoo_image && <p className="text-red-500 text-sm mt-1">{errors.tattoo_image}</p>}
             </div>
             {formData.tattoo_image && (
-              <div className="mt-2">
-                <p className="text-sm text-gray-600">Selected file: {formData.tattoo_image.name}</p>
+              <div className="mt-2 p-3 bg-gray-100 rounded-lg">
+                <p className="text-sm text-gray-600 mb-2">Selected file: {formData.tattoo_image.name}</p>
                 {formData.tattoo_image.type.startsWith('image/') && (
-                  <Image
-                    src={URL.createObjectURL(formData.tattoo_image)}
-                    alt="Tattoo preview"
-                    width={200}
-                    height={200}
-                    className="mt-2 max-w-full h-auto rounded-lg object-cover"
-                  />
+                  <div className="relative w-20 h-20">
+                    <Image
+                      src={URL.createObjectURL(formData.tattoo_image)}
+                      alt="Tattoo preview"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                    />
+                  </div>
                 )}
               </div>
             )}
