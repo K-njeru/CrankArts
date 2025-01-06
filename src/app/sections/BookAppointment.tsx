@@ -141,7 +141,7 @@ export default function BookAppointment() {
           onClose={() => setBannerMessage(null)}
         />
       )}
-      <div className="max-w-7xl mx-auto px-8 flex flex-col-reverse lg:flex-row items-center">
+      <div className="max-w-full sm:max-w-7xl mx-auto px-2 flex flex-col-reverse lg:flex-row items-center">
         {/* Form Section */}
         <div className="lg:w-2/5 w-full h-auto bg-white shadow-2xl rounded-lg p-8 transition-all duration-300 hover:shadow-orange-200">
           <h2 className="text-3xl font-bold text-orange-700 mb-6">Get Inked</h2>
