@@ -29,7 +29,7 @@ export default function ArtistModal({ isOpen, onClose }: ArtistModalProps) {
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 backdrop-blur-sm z-30" aria-hidden="true"></div>
 
           {/* Modal Content */}
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div className="flex flex-start justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <span
               className="hidden sm:inline-block sm:align-middle sm:h-screen"
               aria-hidden="true"
