@@ -98,7 +98,7 @@ export default function ArtistModal({ isOpen, onClose }: ArtistModalProps) {
                     </svg>
                   </a>
                   <a
-                    href="https://www.tiktok.com/@crankarts"
+                    href="https://www.tiktok.com/@crank_arts?_t=ZM-8swtjC8cRrq&_r=1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-black hover:text-gray-700"
