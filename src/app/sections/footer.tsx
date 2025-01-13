@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
                 ),
                 href: 'https://x.com/crank_arts?s=11' , target:'blank'
               },
-              { icon: Facebook, href: 'https://facebook.com' , target:'blank'},
+              { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=100071005256075&mibextid=wwXIfr&mibextid=wwXIfr' , target:'blank'},
 
             ].map(({ icon: Icon, href }, index) => (
               <a

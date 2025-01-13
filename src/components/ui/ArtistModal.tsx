@@ -29,7 +29,7 @@ export default function ArtistModal({ isOpen, onClose }: ArtistModalProps) {
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 backdrop-blur-sm z-30" aria-hidden="true"></div>
 
           {/* Modal Content */}
-          <div className="flex flex-start justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div className="flex flex-start justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <span
               className="hidden sm:inline-block sm:align-middle sm:h-screen"
               aria-hidden="true"
@@ -49,7 +49,7 @@ export default function ArtistModal({ isOpen, onClose }: ArtistModalProps) {
                   onClick={onClose}
                 >
                   <span className="sr-only">Close</span>
-                  <X className="h-6 w-6" aria-hidden="true" />
+                  <X className="h-6 w-6 font-bold text-blue" aria-hidden="true" />
                 </button>
               </div>
               <div className="flex flex-col items-center">
